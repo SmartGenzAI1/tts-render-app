@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TTS App</title>
+</head>
+<body>
+
+<h2>Text To Speech</h2>
+
+<textarea id="text" rows="5" cols="50"></textarea>
+<br><br>
+<button onclick="generate()">Speak</button>
+<br><br>
+
+<audio id="audio" controls></audio>
+
+<script>
+async function generate() {
+    const text = document.getElementById("text").value;
+
+    const response = await fetch("/tts", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ text: text })
+    });
+
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    document.getElementById("audio").src = url;
+}
+</script>
+
+</body>
+</html>
