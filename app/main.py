@@ -1,13 +1,14 @@
 from fastapi import FastAPI
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, HTMLResponse
 from app.schemas import TextRequest
 from app.tts_engine import generate_speech
+import os
 
 app = FastAPI(title="Open Source TTS API")
 
 @app.get("/")
 def home():
-    return {"message": "TTS API Running"}
+    return FileResponse("app/frontend.html")
 
 @app.post("/tts")
 def text_to_speech(request: TextRequest):
